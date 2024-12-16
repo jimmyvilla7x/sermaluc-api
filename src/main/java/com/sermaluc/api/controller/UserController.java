@@ -42,7 +42,7 @@ public class UserController {
     
             UserModel createdUser = userService.signUp(signUpRequestDto);
     
-            return ResponseEntity.ok(createdUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
         } catch (Exception e) {
             ErrorRsDto errorResponse = handleErrorService.handleError(e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
