@@ -25,7 +25,12 @@ public class TestUserService {
     private UserService userService;
 
     @Mock
+    private AuthService authService;
+    @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private PhoneService phoneService;
 
     @Mock
     private PhoneRepository phoneRepository;
@@ -37,14 +42,13 @@ public class TestUserService {
 
     @Test
     public void testSignUp() {
-
         SignUpRqDto request = new SignUpRqDto();
         PhoneDto phoneDto = new PhoneDto();
         phoneDto.setCitycode("7");
         phoneDto.setCountrycode("25");
         phoneDto.setNumber("87650009");
 
-        List listaPhones = new ArrayList<>();
+        List<PhoneDto> listaPhones = new ArrayList<>();
         listaPhones.add(phoneDto);
 
         request.setEmail("juan@gmail.cl");
@@ -53,13 +57,14 @@ public class TestUserService {
         request.setPhones(listaPhones);
 
         Mockito.when(userRepository.findByEmail(request.getEmail())).thenReturn(null);
+
         UserModel result = userService.signUp(request);
 
         assertEquals(request.getName(), result.getName());
         assertEquals(request.getEmail(), result.getEmail());
 
         Mockito.verify(userRepository, times(1)).save(Mockito.any(UserModel.class));
-        Mockito.verify(phoneRepository, times(1)).save(Mockito.any(PhoneModel.class));
+        Mockito.verify(phoneService, times(1)).saveUserPhones(Mockito.any(UserModel.class), Mockito.anyList());
     }
 
     @Test

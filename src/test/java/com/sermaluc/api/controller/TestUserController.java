@@ -63,7 +63,7 @@ public class TestUserController {
 
         ResponseEntity<?> response = userController.signUp(signUpRequestDto);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(createdUser, response.getBody());
     }
 
