@@ -11,9 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @ToString
+@Getter @Setter
 @Entity
 public class PhoneModel {
     @Id
